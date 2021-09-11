@@ -70,16 +70,48 @@ class ViewController: UIViewController {
         self.scrollView.contentInset.bottom = 0
     }
     
-    @IBAction private func onButtonPressed(_ sender: Any) {
-        
+    private func checkPassword() {
         let login = self.loginTextField.text
         let password = self.passwordTextField.text
         
-        if login == "admin" && password == "password" {
-            
+        if login == "ad" && password == "ad" {
+            self.showAdminScene()
+        } else {
+            self.showAlert()
         }
     }
     
+    private func showAdminScene() {
+        let viewController = Constants.Storyboard.debugMenu.instantiateInitialViewController()
+        
+        if let viewController = viewController as? DebugViewController {
+            self.present(viewController, animated: true)
+        }
+    }
     
+    private func showAlert() {
+        let alertController = UIAlertController(
+            title: "Incorrect",
+            message: "Incorrect login or password",
+            preferredStyle: .actionSheet)
+        
+        // добавляем кнопки
+        let action = UIAlertAction(
+            title: "Re-send!",
+            style: .destructive)
+        
+        alertController.addAction(action)
+        self.present(alertController, animated: true)
+        
+     
+    }
+    
+    @IBAction private func onButtonPressed(_ sender: Any) {
+        
+        self.checkPassword()
+        
+    }
+    
+
 }
 
